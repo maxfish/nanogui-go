@@ -5,8 +5,8 @@ package main
 import (
 	"fmt"
 	"github.com/shibukawa/glfw"
-	"github.com/shibukawa/nanogui.go"
-	"github.com/shibukawa/nanogui.go/sample1/demo"
+	"github.com/gianpaolog/nanogui-go"
+	"github.com/gianpaolog/nanogui-go/sample1/demo"
 	"github.com/shibukawa/nanovgo"
 	"io/ioutil"
 	"math"
