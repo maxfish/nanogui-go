@@ -6,6 +6,7 @@ import (
 	"github.com/shibukawa/glfw"
 	"github.com/shibukawa/nanovgo"
 	"runtime"
+
 )
 
 var nanoguiScreens map[*glfw.Window]*Screen = map[*glfw.Window]*Screen{}
@@ -52,9 +53,9 @@ func NewScreen(width, height int, caption string, resizable, fullScreen bool) *S
 	//glfw.WindowHint(glfw.DepthBits, 8)
 	//glfw.WindowHint(glfw.Visible, 0)
 	if resizable {
-		//glfw.WindowHint(glfw.Resizable, 1)
+		glfw.WindowHint(glfw.Resizable, 1)
 	} else {
-		//glfw.WindowHint(glfw.Resizable, 0)
+		glfw.WindowHint(glfw.Resizable, 0)
 	}
 
 	var err error
@@ -594,6 +595,8 @@ func (s *Screen) resizeCallbackEvent(width, height int) bool {
 	if s.resizeEventCallback != nil {
 		return s.resizeEventCallback(int(float32(fbW)/s.pixelRatio), int(float32(fbH)/s.pixelRatio))
 	}
+
+	s.DrawAll()
 	return false
 }
 

@@ -92,9 +92,13 @@ func BasicWidgetsDemo(screen *nanogui.Screen, images []nanogui.Image) (*nanogui.
 	imagePanelButton := nanogui.NewPopupButton(window, "Image Panel")
 	imagePanelButton.SetIcon(nanogui.IconFolder)
 	popup := imagePanelButton.Popup()
-	imgPanel := nanogui.NewImagePanel(popup)
+	popup.SetLayout(nanogui.NewGroupLayout())
+	vs := nanogui.NewVScrollPanel(popup)
+	imgPanel := nanogui.NewImagePanel(vs)
 	imgPanel.SetImages(images)
 	popup.SetFixedSize(245, 150)
+	fmt.Println(popup.Size())
+
 
 	nanogui.NewLabel(window, "File dialog").SetFont("sans-bold")
 
