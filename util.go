@@ -23,6 +23,13 @@ func maxI(a, b int) int {
 	return b
 }
 
+func minI(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
 func clampI(a, min, max int) int {
 	if a > max {
 		return max

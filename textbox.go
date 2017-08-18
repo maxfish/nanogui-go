@@ -5,6 +5,7 @@ import (
 	"github.com/shibukawa/nanovgo"
 	"regexp"
 	"strconv"
+
 )
 
 type TextAlignment int
@@ -429,7 +430,9 @@ func (t *TextBox) Draw(self Widget, ctx *nanovgo.Context) {
 	clipY := y + 1.0
 	clipWidth := w - unitWidth - 2.0*xSpacing + 2.0
 	clipHeight := h - 3.0
-	ctx.Scissor(clipX, clipY, clipWidth, clipHeight)
+	ctx.Save()
+	//fmt.Println("TextBox:",clipX, clipY, clipWidth, clipHeight) //TextBox: 226.4 4 85.2 25
+	ctx.IntersectScissor(clipX, clipY, clipWidth, clipHeight)
 	oldDrawPosX := drawPosX
 	drawPosX += t.textOffset
 
@@ -529,7 +532,8 @@ func (t *TextBox) Draw(self Widget, ctx *nanovgo.Context) {
 			ctx.Stroke()
 		}
 	}
-	ctx.ResetScissor()
+	//ctx.ResetScissor()
+	ctx.Restore()
 }
 
 func (t *TextBox) checkFormat(input string) bool {

@@ -4,6 +4,7 @@ import (
 	"github.com/shibukawa/glfw"
 	"github.com/shibukawa/nanovgo"
 	"runtime"
+
 )
 
 type VScrollPanel struct {
@@ -124,9 +125,10 @@ func (v *VScrollPanel) Draw(self Widget, ctx *nanovgo.Context) {
 	}
 
 	ctx.Save()
-	ctx.Translate(x, y)
-	ctx.Scissor(0, 0, w, h)
+	//ctx.Translate(x,y)
+	ctx.Scissor(x, y, w, h)
 	ctx.Translate(0, -v.scroll*(float32(v.childPreferredHeight)-h))
+
 	if child.Visible() {
 		child.Draw(child, ctx)
 	}
