@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/shibukawa/glfw"
 	"github.com/gianpaolog/nanogui-go"
-	"github.com/shibukawa/nanovgo"
+	"github.com/gianpaolog/nanovgo"
 	"io/ioutil"
 	"path"
 	_ "math"

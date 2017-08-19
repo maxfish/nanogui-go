@@ -2,7 +2,7 @@ package nanogui
 
 import (
 	"github.com/shibukawa/glfw"
-	"github.com/shibukawa/nanovgo"
+	"github.com/gianpaolog/nanovgo"
 	"regexp"
 	"strconv"
 

@@ -3,7 +3,7 @@ package demo
 import (
 	"fmt"
 	"github.com/gianpaolog/nanogui-go"
-	"github.com/shibukawa/nanovgo"
+	"github.com/gianpaolog/nanovgo"
 	"math"
 	"strconv"
 )

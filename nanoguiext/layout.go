@@ -3,7 +3,7 @@ package nanoguiext
 import (
 	"fmt"
 	"github.com/shibukawa/nanogui.go"
-	"github.com/shibukawa/nanovgo"
+	"github.com/gianpaolog/nanovgo"
 )
 
 type FlexibleWidget interface {

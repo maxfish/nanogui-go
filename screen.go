@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"github.com/goxjs/gl"
 	"github.com/shibukawa/glfw"
-	"github.com/shibukawa/nanovgo"
+	"github.com/gianpaolog/nanovgo"
 	"runtime"
 
 )

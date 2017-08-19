@@ -7,7 +7,7 @@ import (
 	"github.com/shibukawa/glfw"
 	"github.com/gianpaolog/nanogui-go"
 	"github.com/gianpaolog/nanogui-go/sample1/demo"
-	"github.com/shibukawa/nanovgo"
+	"github.com/gianpaolog/nanovgo"
 	"io/ioutil"
 	"math"
 	"path"

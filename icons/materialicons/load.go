@@ -1,7 +1,7 @@
 package materialicons
 
 import (
-	"github.com/shibukawa/nanovgo"
+	"github.com/gianpaolog/nanovgo"
 )
 
 func LoadFont(ctx *nanovgo.Context) {
