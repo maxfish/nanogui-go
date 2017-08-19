@@ -64,6 +64,9 @@ func (p *PopupButton) Draw(self Widget, ctx *nanovgo.Context) {
 	if !p.enabled && p.pushed {
 		p.pushed = false
 	}
+	if p.pushed {
+		p.OnPerformLayout(self, ctx)
+	}
 	p.popup.SetVisible(p.pushed)
 	p.Button.Draw(self, ctx)
 	if p.chevronIcon != 0 {
@@ -89,13 +92,28 @@ func (p *PopupButton) PreferredSize(self Widget, ctx *nanovgo.Context) (int, int
 func (p *PopupButton) OnPerformLayout(self Widget, ctx *nanovgo.Context) {
 	p.Button.WidgetImplement.OnPerformLayout(self, ctx)
 	parentWindow := self.FindWindow()
-	x := parentWindow.Width() + 15
-	_, ay := p.AbsolutePosition()
+	//x := parentWindow.Width() + 15
+	_, ay := p.Button.AbsolutePosition()
 	_, py := parentWindow.Position()
-	y := ay - py + p.Height()/2
+	y := ay - py + p.Button.h/2 + p.calcScrollPosition()
+	x := p.Button.x + p.Button.w +25
+	//y := p.Button.y + p.Button.h /2
+
 	p.popup.SetAnchorPosition(x, y)
 }
 
 func (p *PopupButton) String() string {
 	return p.StringHelper("PopupButton", p.caption)
+}
+
+func (p *PopupButton) calcScrollPosition() int {
+	var scrollPosition float32
+	for w := p.parent; w!=nil; w = w.Parent()  {
+		vsp, ok := w.(Scroller)
+		if !ok {
+			continue
+		}
+		scrollPosition -= vsp.ScrollPosition()
+	}
+	return int(scrollPosition)
 }

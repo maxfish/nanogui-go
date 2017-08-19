@@ -35,6 +35,7 @@ func NewComboBox(parent Widget, items ...[]string) *ComboBox {
 	parentWindow := parent.FindWindow()
 	combobox.popup = NewPopup(parentWindow.Parent(), parentWindow)
 	combobox.popup.SetSize(320, 250)
+	combobox.popup.SetVisible(false)
 	InitWidget(combobox, parent)
 	combobox.SetItems(itemsParam, shortItemsParam)
 	return combobox

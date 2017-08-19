@@ -49,7 +49,7 @@ func (a *Application) init() {
 		label.SetFixedWidth(100)
 		label.SetFont("sans-bold")
 
-		combo := nanogui.NewComboBox(container,[]string{"Combo 1 Item", "Combo Item 2", "Combo Item 3"})
+		combo := nanogui.NewComboBox(container,[]string{"Combo Item 1", "Combo Item 2", "Combo Item 3", "Combo Item 4", "Combo Item 5", "Combo Item 6"})
 		combo.SetEnabled(true)
 		combo.SetFixedWidth(100)
 		combo.SetFontSize(12)

@@ -7,6 +7,10 @@ import (
 
 )
 
+type Scroller interface {
+	ScrollPosition() float32
+}
+
 type VScrollPanel struct {
 	WidgetImplement
 
@@ -19,6 +23,10 @@ func NewVScrollPanel(parent Widget) *VScrollPanel {
 	panel := new(VScrollPanel)
 	InitWidget(panel, parent)
 	return panel
+}
+
+func (v *VScrollPanel) ScrollPosition() float32 {
+	return v.scrollPosition
 }
 
 func (v *VScrollPanel) Scroll() float32 {
