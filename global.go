@@ -2,7 +2,7 @@ package nanogui
 
 import (
 	"github.com/goxjs/gl"
-	"github.com/shibukawa/glfw"
+	"github.com/goxjs/glfw"
 	"sync"
 	"time"
 )

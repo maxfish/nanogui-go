@@ -2,7 +2,7 @@ package nanoguiext
 
 import (
 	"fmt"
-	"github.com/shibukawa/nanogui.go"
+	"github.com/gianpaolog/nanogui-go"
 	"github.com/gianpaolog/nanovgo"
 )
 

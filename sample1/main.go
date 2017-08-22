@@ -4,7 +4,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/shibukawa/glfw"
+	"github.com/goxjs/glfw"
 	"github.com/gianpaolog/nanogui-go"
 	"github.com/gianpaolog/nanovgo"
 	"io/ioutil"

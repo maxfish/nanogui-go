@@ -3,7 +3,7 @@ package nanogui
 import (
 	"bytes"
 	"github.com/goxjs/gl"
-	"github.com/shibukawa/glfw"
+	"github.com/goxjs/glfw"
 	"github.com/gianpaolog/nanovgo"
 	"runtime"
 
@@ -109,17 +109,17 @@ func NewScreen(width, height int, caption string, resizable, fullScreen bool) *S
 		}
 	})
 
-	screen.window.SetPreeditCallback(func(w *glfw.Window, text []rune, blocks []int, focusedBlock int) {
-		if screen, ok := nanoguiScreens[w]; ok {
-			screen.preeditCallbackEvent(text, blocks, focusedBlock)
-		}
-	})
-
-	screen.window.SetIMEStatusCallback(func(w *glfw.Window) {
-		if screen, ok := nanoguiScreens[w]; ok {
-			screen.imeStatusCallbackEvent()
-		}
-	})
+	//screen.window.SetPreeditCallback(func(w *glfw.Window, text []rune, blocks []int, focusedBlock int) {
+	//	if screen, ok := nanoguiScreens[w]; ok {
+	//		screen.preeditCallbackEvent(text, blocks, focusedBlock)
+	//	}
+	//})
+	//
+	//screen.window.SetIMEStatusCallback(func(w *glfw.Window) {
+	//	if screen, ok := nanoguiScreens[w]; ok {
+	//		screen.imeStatusCallbackEvent()
+	//	}
+	//})
 
 	screen.window.SetDropCallback(func(w *glfw.Window, names []string) {
 		if screen, ok := nanoguiScreens[w]; ok {
@@ -408,11 +408,12 @@ func (s *Screen) MoveWindowToFront(window IWindow) {
 }
 
 func (s *Screen) PreeditCursorPos() (int, int, int) {
-	return s.window.GetPreeditCursorPos()
+	//return s.window.GetPreeditCursorPos()
+	return -1, -1, -1
 }
 
 func (s *Screen) SetPreeditCursorPos(x, y, h int) {
-	s.window.SetPreeditCursorPos(x, y, h)
+	//s.window.SetPreeditCursorPos(x, y, h)
 }
 
 func (s *Screen) drawWidgets() {

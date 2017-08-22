@@ -2,7 +2,7 @@ package nanogui
 
 import (
 	"fmt"
-	"github.com/shibukawa/glfw"
+	"github.com/goxjs/glfw"
 	"github.com/gianpaolog/nanovgo"
 	"sort"
 )

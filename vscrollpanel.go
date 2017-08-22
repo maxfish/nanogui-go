@@ -1,7 +1,7 @@
 package nanogui
 
 import (
-	"github.com/shibukawa/glfw"
+	"github.com/goxjs/glfw"
 	"github.com/gianpaolog/nanovgo"
 	"runtime"
 

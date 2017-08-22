@@ -4,13 +4,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/shibukawa/glfw"
+	"math"
+	"io/ioutil"
+	"path"
+	"github.com/goxjs/glfw"
 	"github.com/gianpaolog/nanogui-go"
 	"github.com/gianpaolog/nanogui-go/sample1/demo"
 	"github.com/gianpaolog/nanovgo"
-	"io/ioutil"
-	"math"
-	"path"
 )
 
 type Application struct {

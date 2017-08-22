@@ -2,8 +2,8 @@ package nanoguiext
 
 import (
 	"fmt"
-	"github.com/shibukawa/glfw"
-	"github.com/shibukawa/nanogui.go"
+	"github.com/goxjs/glfw"
+	"github.com/gianpaolog/nanogui-go"
 	"github.com/gianpaolog/nanovgo"
 	"math"
 	"runtime"
