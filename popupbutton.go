@@ -60,6 +60,9 @@ func (p *PopupButton) Popup() Widget {
 	return p.popup.panel
 }
 
+func (p *PopupButton) PopupBaloon() *Popup {
+	return p.popup
+}
 func (p *PopupButton) Draw(self Widget, ctx *nanovgo.Context) {
 	if !p.enabled && p.pushed {
 		p.pushed = false

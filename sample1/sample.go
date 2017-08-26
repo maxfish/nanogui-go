@@ -74,7 +74,7 @@ func loadImageDirectory(ctx *nanovgo.Context, dir string) []nanogui.Image {
 			continue
 		}
 		fullPath := path.Join(dir, file.Name())
-		img := ctx.CreateImage(fullPath, 0)
+		img := ctx.CreateImage(fullPath, nanovgo.ImageNearest)
 		if img == 0 {
 			panic("Could not open image data!")
 		}

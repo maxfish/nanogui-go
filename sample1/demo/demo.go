@@ -92,12 +92,12 @@ func BasicWidgetsDemo(screen *nanogui.Screen, images []nanogui.Image) (*nanogui.
 	imagePanelButton := nanogui.NewPopupButton(window, "Image Panel")
 	imagePanelButton.SetIcon(nanogui.IconFolder)
 	popup := imagePanelButton.Popup()
-	//popup.SetLayout(nanogui.NewGroupLayout())
-	vs := nanogui.NewVScrollPanel(popup)
-	imgPanel := nanogui.NewImagePanel(vs)
+	pb:= imagePanelButton.PopupBaloon()
+	pb.SetSize(200,70)
+	popup.SetLayout(nanogui.NewBoxLayout(nanogui.Vertical, nanogui.Fill))
+	imgPanel := nanogui.NewImagePanel(popup)
 	imgPanel.SetImages(images)
-	popup.SetFixedSize(245, 150)
-	fmt.Println(popup.Size())
+
 
 
 	nanogui.NewLabel(window, "File dialog").SetFont("sans-bold")
@@ -281,7 +281,7 @@ func SelectedImageDemo(screen *nanogui.Screen, imageButton *nanogui.PopupButton,
 	window.SetLayout(nanogui.NewGroupLayout())
 
 	img := nanogui.NewImageView(window)
-	img.SetPolicy(nanogui.ImageSizePolicyExpand)
+	img.SetStretchMode(nanogui.StretchFit)
 	img.SetFixedSize(300, 300)
 	img.SetImage(imagePanel.Images()[0].ImageID)
 
@@ -292,9 +292,9 @@ func SelectedImageDemo(screen *nanogui.Screen, imageButton *nanogui.PopupButton,
 	cb := nanogui.NewCheckBox(window, "Expand")
 	cb.SetCallback(func(checked bool) {
 		if checked {
-			img.SetPolicy(nanogui.ImageSizePolicyExpand)
+			img.SetStretchMode(nanogui.StretchFit)
 		} else {
-			img.SetPolicy(nanogui.ImageSizePolicyFixed)
+			img.SetStretchMode(nanogui.StretchNone)
 		}
 	})
 	cb.SetChecked(true)
