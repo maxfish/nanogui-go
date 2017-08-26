@@ -283,10 +283,10 @@ func SelectedImageDemo(screen *nanogui.Screen, imageButton *nanogui.PopupButton,
 	img := nanogui.NewImageView(window)
 	img.SetStretchMode(nanogui.StretchFit)
 	img.SetFixedSize(300, 300)
-	img.SetImage(imagePanel.Images()[0].ImageID)
+	img.SetImage(imagePanel.Images()[0])
 
 	imagePanel.SetCallback(func(index int) {
-		img.SetImage(imagePanel.Images()[index].ImageID)
+		img.SetImage(imagePanel.Images()[index])
 	})
 
 	cb := nanogui.NewCheckBox(window, "Expand")

@@ -6,7 +6,6 @@ import (
 	"github.com/goxjs/glfw"
 	"github.com/gianpaolog/nanovgo"
 	"runtime"
-
 )
 
 var nanoguiScreens map[*glfw.Window]*Screen = map[*glfw.Window]*Screen{}

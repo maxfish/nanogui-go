@@ -3,11 +3,13 @@ package nanogui
 import (
 	"github.com/goxjs/glfw"
 	"github.com/gianpaolog/nanovgo"
+	"image"
 )
 
 type Image struct {
 	ImageID int
 	Name    string
+	ImageData *image.Image
 }
 
 type ImagePanel struct {

@@ -4,6 +4,10 @@ import (
 	"github.com/gianpaolog/nanovgo"
 	"github.com/goxjs/glfw"
 	"math"
+	"fmt"
+
+	"time"
+	"github.com/goxjs/gl"
 )
 
 type ImageStretchMode int
@@ -17,23 +21,23 @@ type ImageView struct {
 	WidgetImplement
 	imgPosY float32
 	imgPosX float32
-	scale float32
-	image  int
+	scale   float32
+	image Image
 	stretch ImageStretchMode
 }
 
-func NewImageView(parent Widget, images ...int) *ImageView {
-	var image int
+func NewImageView(parent Widget, images ...Image) *ImageView {
+	var img Image
 	switch len(images) {
 	case 0:
 	case 1:
-		image = images[0]
+		img = images[0]
 	default:
-		panic("NewImageView can accept only one extra parameter (image)")
+		panic("NewImageView can accept only one extra parameter (imageID)")
 	}
 
 	imageView := &ImageView{
-		image:   image,
+		image: img,
 		stretch: StretchNone,
 		scale:   1.0,
 	}
@@ -42,12 +46,12 @@ func NewImageView(parent Widget, images ...int) *ImageView {
 	return imageView
 }
 
-func (i *ImageView) Image() int {
+func (i *ImageView) Image() Image {
 	return i.image
 }
 
-func (i *ImageView) SetImage(image int) {
-	i.image = image
+func (i *ImageView) SetImage(img Image) {
+	i.image = img
 	i.fit()
 }
 
@@ -66,10 +70,10 @@ func (i *ImageView) SetStretchMode(mode ImageStretchMode) {
 }
 
 func (i *ImageView) PreferredSize(self Widget, ctx *nanovgo.Context) (int, int) {
-	if i.image == 0 {
+	if i.image.ImageID == 0 {
 		return 0, 0
 	}
-	w, h, _ := ctx.ImageSize(i.image)
+	w, h, _ := ctx.ImageSize(i.image.ImageID)
 	return w, h
 }
 
@@ -79,10 +83,20 @@ func (i *ImageView) imageCoordinateAt(posX, posY int) (imgX, imgY float32){
 	return (px-i.imgPosX)/i.scale, (py-i.imgPosY)/i.scale
 }
 
+func (i *ImageView) clampedImageCoordinateAt(posX, posY int) (imgX, imgY int){
+	px, py := i.imageCoordinateAt(posX, posY)
+	img := *i.image.ImageData
+	cx := int(clampF(px, 0, float32(img.Bounds().Size().X)-1))
+	cy := int(clampF(py, 0, float32(img.Bounds().Size().Y)-1))
+
+	return cx, cy
+}
+
 func (i *ImageView) Draw(self Widget, ctx *nanovgo.Context) {
-	if i.image == 0 {
+	if i.image.ImageID == 0 {
 		return
 	}
+	gl.Enable(gl.SCISSOR_TEST)
 	x := float32(i.x)
 	y := float32(i.y)
 	ow := float32(i.w)
@@ -90,7 +104,7 @@ func (i *ImageView) Draw(self Widget, ctx *nanovgo.Context) {
 
 	var w, h float32
 	{
-		iw, ih, _ := ctx.ImageSize(i.image)
+		iw, ih, _ := ctx.ImageSize(i.image.ImageID)
 		w = float32(iw)
 		h = float32(ih)
 	}
@@ -103,7 +117,7 @@ func (i *ImageView) Draw(self Widget, ctx *nanovgo.Context) {
 	w *= i.scale
 	h *= i.scale
 
-	imgPaint := nanovgo.ImagePattern(imgX, imgY, w, h, 0, i.image, 1.0)
+	imgPaint := nanovgo.ImagePattern(imgX, imgY, w, h, 0, i.image.ImageID, 1.0)
 
 	ctx.BeginPath()
 	ctx.Rect(imgX, imgY, w, h)
@@ -111,8 +125,9 @@ func (i *ImageView) Draw(self Widget, ctx *nanovgo.Context) {
 	ctx.Fill()
 
 	i.drawImageBorder(ctx,imgX, imgY, w, h)
-	if i.scale>20 {
+	if i.scale>30 {
 		i.drawPixelGrid(ctx,imgX, imgY, w, h)
+		i.drawPixelInfo(ctx,imgX, imgY, w, h)
 	}
 
 	i.drawWidgetBorder(ctx, x, y, ow, oh)
@@ -138,6 +153,38 @@ func (i *ImageView) drawPixelGrid(ctx *nanovgo.Context, imgX, imgY, w, h float32
 	ctx.SetStrokeColor(nanovgo.MONO(255, 50))
 	ctx.Stroke()
 }
+
+func (i *ImageView) drawPixelInfo(ctx *nanovgo.Context, imgX, imgY, w, h float32) {
+	scale := i.scale
+	x1, y1 := i.clampedImageCoordinateAt(0,0)
+	x2, y2 := i.clampedImageCoordinateAt(int(w), int(h))
+	img := *i.image.ImageData
+
+	fontSize := clampF(i.scale*0.2, 0, 30) //Magic Number
+	ctx.BeginPath()
+	ctx.SetTextAlign(nanovgo.AlignCenter | nanovgo.AlignTop)
+	ctx.SetFontSize(fontSize)
+	ctx.SetFontFace("sans")
+	xOffset := scale /2
+	yOffset := 2+(scale - (fontSize+3) * 4) / 2  // Center 4 rows
+
+	t0 := time.Now()
+	for j:=y1; j<=y2; j++ {
+		for k:=x1; k<=x2; k++ {
+
+			r,g,b,a := img.At(k, j).RGBA()
+			tx := imgX + float32(k) * scale + xOffset
+			ty := imgY + float32(j) * scale + yOffset
+			ctx.Text(tx, ty , fmt.Sprintf("%d", uint8(r>>8)))
+			ctx.Text(tx, ty + fontSize, fmt.Sprintf("%d", uint8(g>>8)))
+			ctx.Text(tx, ty + 2*fontSize, fmt.Sprintf("%d", uint8(b>>8)))
+			ctx.Text(tx, ty + 3*fontSize, fmt.Sprintf("%d", uint8(a>>8)))
+		}
+	}
+	t1 := time.Since(t0)
+	fmt.Println("Write info:", t1)
+}
+
 
 func (i *ImageView) drawImageBorder(ctx *nanovgo.Context, imgX, imgY, w, h float32) {
 	ctx.BeginPath()
@@ -194,7 +241,7 @@ func (i *ImageView) center() {
 	w := float32(i.w)
 	h := float32(i.h)
 	screen := i.FindWindow().Parent().(*Screen)
-	iw, ih, _ := screen.context.ImageSize(i.image)
+	iw, ih, _ := screen.context.ImageSize(i.image.ImageID)
 	sw := float32(iw) * i.scale
 	sh := float32(ih) * i.scale
 	i.imgPosX = (w-sw) / 2
@@ -208,7 +255,7 @@ func (i *ImageView) fit() {
 		return
 	}
 	screen := i.FindWindow().Parent().(*Screen)
-	iw, ih, _ := screen.context.ImageSize(i.image)
+	iw, ih, _ := screen.context.ImageSize(i.image.ImageID)
 	if iw==-1 && ih==-1 {
 		return
 	}
