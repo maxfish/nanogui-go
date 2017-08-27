@@ -5,8 +5,6 @@ import (
 	"github.com/goxjs/glfw"
 	"math"
 	"fmt"
-
-	"time"
 	"github.com/goxjs/gl"
 )
 
@@ -127,7 +125,7 @@ func (i *ImageView) Draw(self Widget, ctx *nanovgo.Context) {
 	i.drawImageBorder(ctx,imgX, imgY, w, h)
 	if i.scale>30 {
 		i.drawPixelGrid(ctx,imgX, imgY, w, h)
-		i.drawPixelInfo(ctx,imgX, imgY, w, h)
+		i.drawPixelInfo(ctx,imgX, imgY, ow, oh)
 	}
 
 	i.drawWidgetBorder(ctx, x, y, ow, oh)
@@ -168,21 +166,27 @@ func (i *ImageView) drawPixelInfo(ctx *nanovgo.Context, imgX, imgY, w, h float32
 	xOffset := scale /2
 	yOffset := 2+(scale - (fontSize+3) * 4) / 2  // Center 4 rows
 
-	t0 := time.Now()
+	//var tr,tg,tb,ta time.Duration
+	//t0 := time.Now()
 	for j:=y1; j<=y2; j++ {
 		for k:=x1; k<=x2; k++ {
-
 			r,g,b,a := img.At(k, j).RGBA()
 			tx := imgX + float32(k) * scale + xOffset
 			ty := imgY + float32(j) * scale + yOffset
 			ctx.Text(tx, ty , fmt.Sprintf("%d", uint8(r>>8)))
+			//tr = time.Since(t0)
 			ctx.Text(tx, ty + fontSize, fmt.Sprintf("%d", uint8(g>>8)))
+			//tg = time.Since(t0)
 			ctx.Text(tx, ty + 2*fontSize, fmt.Sprintf("%d", uint8(b>>8)))
+			//tb = time.Since(t0)
 			ctx.Text(tx, ty + 3*fontSize, fmt.Sprintf("%d", uint8(a>>8)))
+			//ta = time.Since(t0)
 		}
 	}
-	t1 := time.Since(t0)
-	fmt.Println("Write info:", t1)
+	//if time.Since(t0) > 50*time.Millisecond {
+	//	fmt.Println("Write info RGBA:", tr, tb, tg, ta)
+	//	fmt.Println("Write info RECT:", x1, y1, x2, y2)
+	//}
 }
 
 

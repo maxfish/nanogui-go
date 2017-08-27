@@ -11,6 +11,8 @@ import (
 	"github.com/gianpaolog/nanogui-go"
 	"github.com/gianpaolog/nanogui-go/sample1/demo"
 	"github.com/gianpaolog/nanovgo"
+    _ "net/http/pprof"
+	"net/http"
 )
 
 type Application struct {
@@ -20,6 +22,10 @@ type Application struct {
 }
 
 func (a *Application) init() {
+	go func() {
+		http.ListenAndServe(":5555", http.DefaultServeMux)
+	}()
+
 	glfw.WindowHint(glfw.Samples, 4)
 	a.screen = nanogui.NewScreen(1024, 768, "NanoGUI.Go Test", true, false)
 
