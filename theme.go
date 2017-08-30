@@ -12,6 +12,14 @@ type Theme struct {
 	WindowHeaderHeight   int
 	WindowDropShadowSize int
 	ButtonCornerRadius   int
+	TabBorderWidth		 float32
+	TabInnerMargin		 int
+	TabMinButtonWidth	 int
+	TabMaxWidth			 int
+	TabControlWidth		 int
+	TabButtonHorizontalPadding int
+	TabButtonVerticalPadding int
+
 
 	DropShadow        nanovgo.Color
 	Transparent       nanovgo.Color
@@ -61,6 +69,13 @@ func NewStandardTheme(ctx *nanovgo.Context) *Theme {
 		WindowHeaderHeight:   30,
 		WindowDropShadowSize: 10,
 		ButtonCornerRadius:   2,
+		TabBorderWidth:		  .75,
+		TabInnerMargin:		  5,
+		TabMinButtonWidth:    20,
+		TabMaxWidth:          160,
+		TabControlWidth:	  20,
+		TabButtonHorizontalPadding: 10,
+		TabButtonVerticalPadding: 2,
 
 		DropShadow:        nanovgo.MONO(0, 128),
 		Transparent:       nanovgo.MONO(0, 0),
