@@ -15,7 +15,7 @@ type Theme struct {
 	TabBorderWidth		 float32
 	TabInnerMargin		 int
 	TabMinButtonWidth	 int
-	TabMaxWidth			 int
+	TabMaxButtonWidth	 int
 	TabControlWidth		 int
 	TabButtonHorizontalPadding int
 	TabButtonVerticalPadding int
@@ -72,7 +72,7 @@ func NewStandardTheme(ctx *nanovgo.Context) *Theme {
 		TabBorderWidth:		  .75,
 		TabInnerMargin:		  5,
 		TabMinButtonWidth:    20,
-		TabMaxWidth:          160,
+		TabMaxButtonWidth:          160,
 		TabControlWidth:	  20,
 		TabButtonHorizontalPadding: 10,
 		TabButtonVerticalPadding: 2,
