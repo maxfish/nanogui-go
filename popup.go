@@ -2,7 +2,7 @@ package nanogui
 
 import (
 	"fmt"
-	"github.com/gianpaolog/nanovgo"
+	"github.com/maxfish/vg4go-gl4"
 )
 
 type Popup struct {

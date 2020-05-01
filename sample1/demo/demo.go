@@ -2,8 +2,8 @@ package demo
 
 import (
 	"fmt"
-	"github.com/gianpaolog/nanogui-go"
-	"github.com/gianpaolog/nanovgo"
+	"github.com/maxfish/nanogui-go"
+	"github.com/maxfish/vg4go-gl4"
 	"math"
 	"strconv"
 )

@@ -1,8 +1,8 @@
 package nanogui
 
 import (
-	"github.com/goxjs/glfw"
-	"github.com/gianpaolog/nanovgo"
+	"github.com/go-gl/glfw/v3.3/glfw"
+	"github.com/maxfish/vg4go-gl4"
 	"regexp"
 	"strconv"
 
@@ -559,7 +559,7 @@ func (t *TextBox) CopySelection() bool {
 
 func (t *TextBox) PasteFromClipboard() {
 	sc := t.FindWindow().Parent().(*Screen)
-	str, _ := sc.GLFWWindow().GetClipboardString()
+	str := sc.GLFWWindow().GetClipboardString()
 	runes := []rune(str)
 	t.valueTemp = append(t.valueTemp[:t.cursorPos], append(runes, t.valueTemp[t.cursorPos:]...)...)
 	t.cursorPos += len(runes)

@@ -1,7 +1,7 @@
 package nanogui
 
 import (
-	"github.com/gianpaolog/nanovgo"
+	"github.com/maxfish/vg4go-gl4"
 )
 
 type Graph struct {

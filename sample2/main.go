@@ -3,8 +3,8 @@
 package main
 
 import (
-	"github.com/goxjs/glfw"
-	"github.com/gianpaolog/nanogui-go"
+	"github.com/go-gl/glfw/v3.3/glfw"
+	"github.com/maxfish/nanogui-go"
 )
 
 type Application struct {

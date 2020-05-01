@@ -1,11 +1,11 @@
 package nanogui
 
 import (
-	"github.com/gianpaolog/nanovgo"
-	"github.com/goxjs/glfw"
-	"math"
 	"fmt"
-	"github.com/goxjs/gl"
+	"github.com/maxfish/vg4go-gl4"
+	"github.com/go-gl/gl/v4.1-core/gl"
+	"github.com/go-gl/glfw/v3.3/glfw"
+	"math"
 )
 
 type ImageStretchMode int

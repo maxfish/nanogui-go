@@ -2,8 +2,8 @@ package nanogui
 
 import (
 	"fmt"
-	"github.com/goxjs/glfw"
-	"github.com/gianpaolog/nanovgo"
+	"github.com/maxfish/vg4go-gl4"
+	"github.com/go-gl/glfw/v3.3/glfw"
 	"math"
 )
 

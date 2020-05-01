@@ -1,8 +1,8 @@
 package nanogui
 
 import (
-	"github.com/goxjs/glfw"
-	"github.com/gianpaolog/nanovgo"
+	"github.com/go-gl/glfw/v3.3/glfw"
+	"github.com/maxfish/vg4go-gl4"
 	"runtime"
 
 )

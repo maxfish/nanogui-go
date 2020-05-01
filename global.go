@@ -1,8 +1,7 @@
 package nanogui
 
 import (
-	"github.com/goxjs/gl"
-	"github.com/goxjs/glfw"
+	"github.com/go-gl/glfw/v3.3/glfw"
 	"sync"
 	"time"
 )
@@ -12,10 +11,14 @@ var startTime time.Time
 var debugFlag bool
 
 func Init() {
-	err := glfw.Init(gl.ContextWatcher)
+	err := glfw.Init() //gl.ContextWatcher)
 	if err != nil {
 		panic(err)
 	}
+	glfw.WindowHint(glfw.ContextVersionMajor, 4)
+	glfw.WindowHint(glfw.ContextVersionMinor, 1)
+	glfw.WindowHint(glfw.OpenGLProfile, glfw.OpenGLCoreProfile)
+	glfw.WindowHint(glfw.OpenGLForwardCompatible, glfw.True)
 	startTime = time.Now()
 }
 

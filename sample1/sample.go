@@ -4,15 +4,15 @@ package main
 
 import (
 	"fmt"
-	"math"
+	"github.com/maxfish/nanogui-go"
+	"github.com/maxfish/nanogui-go/sample1/demo"
+	"github.com/maxfish/vg4go-gl4"
+	"github.com/go-gl/glfw/v3.3/glfw"
 	"io/ioutil"
-	"path"
-	"github.com/goxjs/glfw"
-	"github.com/gianpaolog/nanogui-go"
-	"github.com/gianpaolog/nanogui-go/sample1/demo"
-	"github.com/gianpaolog/nanovgo"
-    _ "net/http/pprof"
+	"math"
 	"net/http"
+	_ "net/http/pprof"
+	"path"
 )
 
 type Application struct {
@@ -27,8 +27,8 @@ func (a *Application) init() {
 	}()
 
 	glfw.WindowHint(glfw.Samples, 4)
-	a.screen = nanogui.NewScreen(1024, 768, "NanoGUI.Go Test", true, false)
 
+	a.screen = nanogui.NewScreen(1024, 768, "NanoGUI.Go Test", true, false)
 	a.screen.NVGContext().CreateFont("japanese", "font/GenShinGothic-P-Regular.ttf")
 
 	demo.ButtonDemo(a.screen)
@@ -57,6 +57,8 @@ func (a *Application) init() {
 
 func main() {
 	nanogui.Init()
+	//initOpenGL()
+
 	//nanogui.SetDebug(true)
 	app := Application{}
 	app.init()
@@ -80,7 +82,7 @@ func loadImageDirectory(ctx *nanovgo.Context, dir string) []nanogui.Image {
 			continue
 		}
 		fullPath := path.Join(dir, file.Name())
-		handle, image := ctx.CreateImage(fullPath, nanovgo.ImageNearest)
+		handle, image := ctx.CreateImage(fullPath, 0)
 		if handle == 0 {
 			panic("Could not open image data!")
 		}

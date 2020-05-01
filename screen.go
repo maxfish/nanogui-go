@@ -2,9 +2,9 @@ package nanogui
 
 import (
 	"bytes"
-	"github.com/goxjs/gl"
-	"github.com/goxjs/glfw"
-	"github.com/gianpaolog/nanovgo"
+	"github.com/maxfish/vg4go-gl4"
+	"github.com/go-gl/gl/v4.1-core/gl"
+	"github.com/go-gl/glfw/v3.3/glfw"
 	"runtime"
 )
 
@@ -40,22 +40,15 @@ func NewScreen(width, height int, caption string, resizable, fullScreen bool) *S
 		caption: caption,
 	}
 
-	if runtime.GOARCH == "js" {
-		glfw.WindowHint(glfw.Hint(0x00021101), 1) // enable stencil for nanovgo
-	}
 	glfw.WindowHint(glfw.Samples, 4)
-	//glfw.WindowHint(glfw.RedBits, 8)
-	//glfw.WindowHint(glfw.GreenBits, 8)
-	//glfw.WindowHint(glfw.BlueBits, 8)
 	glfw.WindowHint(glfw.AlphaBits, 8)
-	//glfw.WindowHint(glfw.StencilBits, 8)
-	//glfw.WindowHint(glfw.DepthBits, 8)
-	//glfw.WindowHint(glfw.Visible, 0)
+
 	if resizable {
 		glfw.WindowHint(glfw.Resizable, 1)
 	} else {
 		glfw.WindowHint(glfw.Resizable, 0)
 	}
+
 
 	var err error
 	if fullScreen {
@@ -68,10 +61,24 @@ func NewScreen(width, height int, caption string, resizable, fullScreen bool) *S
 	if err != nil {
 		panic(err)
 	}
+
 	screen.window.MakeContextCurrent()
-	gl.Viewport(0, 0, screen.fbW, screen.fbH)
+
+	runtime.LockOSThread()
+	if err := gl.Init(); err != nil {
+		panic(err)
+	}
+	gl.Enable(gl.DEPTH_TEST)
+	gl.DepthMask(true)
+	gl.DepthFunc(gl.LEQUAL)
+	gl.DepthRange(0.0, 1.0)
+	gl.Enable(gl.BLEND)
+	gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+
+	gl.Viewport(0, 0, int32(screen.fbW), int32(screen.fbH))
 	gl.ClearColor(0, 0, 0, 1)
 	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT)
+
 	glfw.SwapInterval(0)
 	screen.window.SwapBuffers()
 
@@ -422,7 +429,7 @@ func (s *Screen) drawWidgets() {
 	s.window.MakeContextCurrent()
 	s.fbW, s.fbH = s.window.GetFramebufferSize()
 	s.w, s.h = s.window.GetSize()
-	gl.Viewport(0, 0, s.fbW, s.fbH)
+	gl.Viewport(0, 0, int32(s.fbW), int32(s.fbH))
 
 	s.pixelRatio = float32(s.fbW) / float32(s.w)
 	s.context.BeginFrame(s.w, s.h, s.pixelRatio)
