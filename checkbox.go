@@ -14,9 +14,6 @@ type CheckBox struct {
 }
 
 func NewCheckBox(parent Widget, caption string) *CheckBox {
-	if caption == "" {
-		caption = "Untitled"
-	}
 	checkBox := &CheckBox{
 		caption: caption,
 	}
