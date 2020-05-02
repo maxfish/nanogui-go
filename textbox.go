@@ -5,7 +5,6 @@ import (
 	"github.com/maxfish/vg4go-gl4"
 	"regexp"
 	"strconv"
-
 )
 
 type TextAlignment int
@@ -735,8 +734,7 @@ func (t *FloatBox) Value() float64 {
 }
 
 func (t *FloatBox) SetValue(value float64) {
-	// todo: remove trailing zero
-	t.value = strconv.FormatFloat(value, 'f', 5, 64)
+	t.value = trimmedStringFromFloat(value)
 }
 
 func (t *FloatBox) DefaultValue() float64 {
@@ -745,8 +743,7 @@ func (t *FloatBox) DefaultValue() float64 {
 }
 
 func (t *FloatBox) SetDefaultValue(value float64) {
-	// todo: remove trailing zero
-	t.defaultValue = strconv.FormatFloat(value, 'f', 5, 64)
+	t.defaultValue = trimmedStringFromFloat(value)
 }
 
 func (f *FloatBox) SetCallback(callback func(float64)) {
@@ -755,4 +752,21 @@ func (f *FloatBox) SetCallback(callback func(float64)) {
 
 func (f *FloatBox) String() string {
 	return f.StringHelper("FloatBox", f.value)
+}
+
+func trimmedStringFromFloat(value float64) string {
+	// Removes the leading zeros
+	text := strconv.FormatFloat(value, 'f', 5, 64)
+	runes := []rune(text)
+	resulting_length := len(runes)
+	for i := len(text) - 1; i > 0; i-- {
+		if runes[i-1] == '.' {
+			break
+		}
+		if runes[i] != '0' {
+			break
+		}
+		resulting_length--
+	}
+	return string(runes[:resulting_length])
 }
