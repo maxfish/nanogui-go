@@ -133,7 +133,7 @@ func (w *Window) PreferredSize(self Widget, ctx *nanovgo.Context) (int, int) {
 	if w.buttonPanel != nil {
 		w.buttonPanel.SetVisible(true)
 	}
-	ctx.SetFontSize(18.0)
+	ctx.SetFontSize(float32(w.theme.WindowHeaderFontSize))
 	ctx.SetFontFace(w.theme.FontBold)
 	_, bounds := ctx.TextBounds(0, 0, w.title)
 
@@ -208,7 +208,7 @@ func (w *Window) Draw(self Widget, ctx *nanovgo.Context) {
 		ctx.SetStrokeColor(w.theme.WindowHeaderSepTop)
 		ctx.Stroke()
 
-		ctx.SetFontSize(18.0)
+		ctx.SetFontSize(float32(w.theme.WindowHeaderFontSize))
 		ctx.SetFontFace(w.theme.FontBold)
 		ctx.SetTextAlign(nanovgo.AlignCenter | nanovgo.AlignMiddle)
 		ctx.SetFontBlur(2.0)

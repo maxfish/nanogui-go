@@ -39,6 +39,8 @@ type Theme struct {
 	ButtonGradientBotPushed    nanovgo.Color
 
 	/* Window-related */
+	WindowHeaderFontSize int
+
 	WindowFillUnfocused  nanovgo.Color
 	WindowFillFocused    nanovgo.Color
 	WindowTitleUnfocused nanovgo.Color
@@ -93,6 +95,9 @@ func NewStandardTheme(ctx *nanovgo.Context) *Theme {
 		ButtonGradientBotUnfocused: nanovgo.MONO(58, 255),
 		ButtonGradientTopPushed:    nanovgo.MONO(41, 255),
 		ButtonGradientBotPushed:    nanovgo.MONO(29, 255),
+
+		/* Window-related */
+		WindowHeaderFontSize: 18,
 
 		WindowFillUnfocused:  nanovgo.MONO(43, 230),
 		WindowFillFocused:    nanovgo.MONO(45, 230),
