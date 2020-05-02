@@ -759,7 +759,7 @@ func NewAdvancedGridLayout(sizes ...[]int) *AdvancedGridLayout {
 		cols = sizes[0]
 		rows = sizes[1]
 	default:
-		panic("NewBoxLayout can accept extra parameter upto 2 (cols, rows).")
+		panic("NewAdvancedGridLayout can accept extra parameter upto 2 (cols, rows).")
 	}
 	return &AdvancedGridLayout{
 		cols:       cols,
