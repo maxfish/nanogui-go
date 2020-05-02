@@ -49,7 +49,6 @@ func NewScreen(width, height int, caption string, resizable, fullScreen bool) *S
 		glfw.WindowHint(glfw.Resizable, 0)
 	}
 
-
 	var err error
 	if fullScreen {
 		monitor := glfw.GetPrimaryMonitor()
@@ -63,17 +62,6 @@ func NewScreen(width, height int, caption string, resizable, fullScreen bool) *S
 	}
 
 	screen.window.MakeContextCurrent()
-
-	runtime.LockOSThread()
-	if err := gl.Init(); err != nil {
-		panic(err)
-	}
-	gl.Enable(gl.DEPTH_TEST)
-	gl.DepthMask(true)
-	gl.DepthFunc(gl.LEQUAL)
-	gl.DepthRange(0.0, 1.0)
-	gl.Enable(gl.BLEND)
-	gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
 
 	gl.Viewport(0, 0, int32(screen.fbW), int32(screen.fbH))
 	gl.ClearColor(0, 0, 0, 1)
